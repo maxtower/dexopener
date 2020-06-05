@@ -19,6 +19,7 @@ package com.example.dexopener.simple;
 import android.app.Activity;
 
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.runner.lifecycle.ActivityLifecycleCallback;
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
@@ -29,6 +30,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
@@ -64,6 +66,11 @@ public class MainActivityTest implements ActivityLifecycleCallback {
         try (ActivityScenario<MainActivity> s = ActivityScenario.launch(MainActivity.class)) {
             s.onActivity(activity -> verify(activity.myService).doIt());
         }
+        TestApp testApp = (TestApp) ApplicationProvider.getApplicationContext();
+        System.out.println(" ****** Application  name = " + testApp.getName());
+        System.out.println(" ****** Application  data = " + testApp.getData());
+        Mockito.doReturn(55).when(testApp).getData();
+        System.out.println(" ****** Application  data = " + testApp.getData());
     }
 
 }

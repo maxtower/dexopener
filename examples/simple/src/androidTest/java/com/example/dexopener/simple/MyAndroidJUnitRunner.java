@@ -24,11 +24,13 @@ import androidx.test.runner.AndroidJUnitRunner;
 
 import com.github.tmurakami.dexopener.DexOpener;
 
+import org.mockito.Mockito;
+
 public class MyAndroidJUnitRunner extends AndroidJUnitRunner {
     @Override
     public Application newApplication(ClassLoader cl, String className, Context context)
             throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         DexOpener.install(this); // Call me first!
-        return super.newApplication(cl, className, context);
+        return Mockito.spy(super.newApplication(cl, "com.example.dexopener.simple.TestApp", context));
     }
 }
